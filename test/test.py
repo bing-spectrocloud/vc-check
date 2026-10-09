@@ -1,6 +1,7 @@
 import os
 import ssl
-from pyVim.connect import SmartConnectNoSSL, Disconnect
+from pyVmomi import vim
+from pyVim.connect import SmartConnect, Disconnect
 
 def test_vcenter_connection():
     # 1. Gather env variables set by the GitHub Action workflow
@@ -14,7 +15,7 @@ def test_vcenter_connection():
 
     try:
         # 3. Connect to the simulator
-        si = SmartConnectNoSSL(
+        si = SmartConnect(
             host=host,
             user=user,
             pwd=password,

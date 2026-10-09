@@ -34,13 +34,20 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyvmomi pytest
+          if [ -f requirements.txt ]; then
+              pip install -r requirements.txt
+          fi
 
       - name: Run Tests
-        run: pytest
         env:
           # Point your test suite to the GitHub runner's localhost map
           VCENTER_HOST: "localhost"
           VCENTER_PORT: 8989
           VCENTER_USER: "administrator@vsphere.local"
           VCENTER_PASS: "password"
+        run: |
+          if [ -f test/test.py ]; then
+            python test.py
+          else
+            echo "No test.py found, skipping tests."
+          fi

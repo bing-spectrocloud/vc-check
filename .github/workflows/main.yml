@@ -15,11 +15,6 @@ jobs:
         image: vmware/vcsim:latest
         ports:
           - 8989:8989
-        options: >-
-          --health-cmd "curl --insecure --fail https://localhost:8989/sdk || exit 1"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
       - name: Checkout Code
@@ -41,10 +36,10 @@ jobs:
       - name: Run Tests
         env:
           # Point your test suite to the GitHub runner's localhost map
-          VCENTER_HOST: "localhost"
-          VCENTER_PORT: 8989
-          VCENTER_USER: "administrator@vsphere.local"
-          VCENTER_PASS: "password"
+          VCENTER_HOST: "127.0.0.1"
+          VCENTER_PORT: "8989"
+          VCENTER_USER: "user"
+          VCENTER_PASS: "pass"
         run: |
           if [ -f test/test.py ]; then
             python test.py

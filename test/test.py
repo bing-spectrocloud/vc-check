@@ -7,7 +7,8 @@ class TestVCenterIntegration(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # Dynamically read connection parameters from environment variables or default to localhost
-        cls.host = os.getenv("VCENTER_HOST", "127.0.0.1:8989")
+        cls.host = os.getenv("VCENTER_HOST", "127.0.0.1")
+        cls.port = os.getenv("VCENTER_PORT", "8989")
         cls.user = os.getenv("VCENTER_USER", "user")
         cls.password = os.getenv("VCENTER_PASSWORD", "pass")
 
@@ -16,6 +17,7 @@ class TestVCenterIntegration(unittest.TestCase):
         result = find_datacenter(
             host=self.host,
             user=self.user,
+            port=self.port,
             password=self.password,
             dc_name="DC0" # vcsim auto-creates 'DC0' by default
         )
@@ -25,6 +27,7 @@ class TestVCenterIntegration(unittest.TestCase):
         """Integration test: Verify that searching for a non-existent datacenter returns False."""
         result = find_datacenter(
             host=self.host,
+            port=self.port,
             user=self.user,
             password=self.password,
             dc_name="NonExistent-DC"

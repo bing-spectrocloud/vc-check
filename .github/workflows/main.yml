@@ -42,7 +42,7 @@ jobs:
           VCENTER_PASS: "pass"
         run: |
           if [ -f test/test.py ]; then
-            python test.py
+            python test/test.py
           else
             echo "No test.py found, skipping tests."
           fi
